@@ -1,10 +1,16 @@
 import mysql.connector
 
+import os
+
+db_host = os.environ['DB_HOST']
+db_user = os.environ['DB_USER']
+db_password = os.environ['DB_PASSWORD']
+print(db_host)
+print(db_password)
 try:
-  mydb = mysql.connector.connect(
-    host="aws.connect.psdb.cloud",
-    user="bbhh9tfvizntvohsl6qa",
-    password="pscale_pw_W3NeI5EiDIyT4cpNu8wkV74e9uSktsev7k4rn9STRrQ")
+  mydb = mysql.connector.connect(host=db_host,
+                                 user=db_user,
+                                 password=db_password)
   cursor = mydb.cursor()
   print("connection successfully", mydb)
 except Exception as e:
@@ -56,3 +62,5 @@ def Class_select(a):
   cursor.execute(query)
   result = cursor.fetchall()
   return result
+
+
