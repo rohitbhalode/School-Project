@@ -40,6 +40,14 @@
       border-radius: 4px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
+    .footer {
+      text-align: center;
+      background-color: #f1f1f1;
+      padding: 10px;
+      font-size: 14px;
+      color: #666;
+    }
   </style>
 </head>
   
@@ -47,25 +55,52 @@
 <body>
   <div class="navbar">
     <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="#"><i class="fees-structure"></i> Fees Structure</a>
-    <a href="#"> Career with us</a>
-    <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+    <a href="#fees-structure"><i class="fees-structure"></i> Fees Structure</a>
+    <a href="#career"><i class="fa fa-fw fa-briefcase"></i> Career with Us</a>
+    <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
     <a href="/login"><i class="fa fa-fw fa-user"></i> Login</a>
   </div>
 
   <div class="column">
-  <h1>Bhalode Academy</h1>
-  <img src="static/pic1.png" alt="Image description" style="width: 100%; height: 270px;">
-  
-</div>
+    <h1>Bhalode Academy</h1>
+    <img src="static/pic1.png" alt="Image description" style="width: 100%; height: 270px;">
+  </div>
 
+  <div id="fees-structure" class="card">
+    <h2>Fees Structure</h2>
+    <!-- Add your class-wise fee structure here -->
+    <p>Class 9: &#8377;XXX</p>
+    <p>Class 10: &#8377;XXX</p>
+    <p>Class 11: &#8377;XXX</p>
+    <p>Class 12: &#8377;XXX</p>
+  </div>
 
-  
-  <div class="card">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <div id="career" class="card">
+    <h2>Career with Us - Teacher Recruitment</h2>
+    <p>We are looking for passionate and qualified teachers to join our coaching classes. If you are interested in a teaching position, please fill out the form below:</p>
+    <form action="/teacher_recruitment" method="post">
+      <!-- Add your form fields for teacher recruitment here -->
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br>
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" required><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <div id="contact" class="card">
+    <h2>Contact Us</h2>
+    <!-- Add your contact information here -->
+    <p>Email: rohitbhalode@gmail.com</p>
+    <p>Phone: 8319231664</p>
+    <p>Address: Burhanpur 450331,MP,India</p>
+  </div>
+
+  <div class="footer">
+    &copy; 2023 Bhalode Academy. All rights reserved.
   </div>
 
 </body>
-
 </html>

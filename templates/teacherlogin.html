@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>{{ name }}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
+    /* Add your custom styles here */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
     .navbar {
       background-color: #f1f1f1;
-      overflow: hidden;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .navbar a {
-      float: left;
       color: #333;
-      text-align: center;
-      padding: 14px 16px;
       text-decoration: none;
       font-size: 16px;
+      margin-right: 10px;
+      padding: 10px;
     }
 
     .navbar a:hover {
@@ -31,21 +41,9 @@
       margin-right: 5px;
     }
 
-    /* Dropdown styles */
     .dropdown {
-      float: left;
-      overflow: hidden;
-    }
-
-    .dropbtn {
-      font-size: 16px;
-      border: none;
-      outline: none;
-      color: black;
-      padding: 14px 16px;
-      background-color: inherit;
-      font-family: inherit;
-      margin: 0;
+      position: relative;
+      display: inline-block;
     }
 
     .dropdown-content {
@@ -53,59 +51,60 @@
       position: absolute;
       background-color: #f9f9f9;
       min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
-    }
-
-    .dropdown-content a {
-      float: none;
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      text-align: left;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #ddd;
     }
 
     .dropdown:hover .dropdown-content {
       display: block;
     }
 
-    /* Dropdown menu classes */
-    .dropdown-menu-item {
-      font-size: 14px;
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
     }
 
-    .dropdown-menu-item:hover {
-      background-color: #ccc;
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .fake-footer {
+      background-color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
-  <h1>
-    <div class="navbar">
-      <a class="active" href="/teacher_profile"><i class="fa fa-user"></i> {{name}}</a>
-      <a  href="/new_Admission"> New Admission</a>
-    
-      <div class="dropdown">
-        <button class="dropbtn"> Classes</button>
-        <div class="dropdown-content">
-          <a href="#" class="dropdown-menu-item">Class-9 </a>
-          <a href="#" class="dropdown-menu-item">Class-10 </a>
-          <a href="#" class="dropdown-menu-item">Class-11 </a>
-          <a href="#" class="dropdown-menu-item">Class-12 </a>
-        </div>
+  <div class="navbar">
+    <a class="active" href="/teacher_profile"><i class="fa fa-user"></i> {{ name }}</a>
+     <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+    <div class="dropdown">
+      
+      <button class="dropbtn">Classes <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-content">
+        <a href="/class_data/9" class="dropdown-menu-item">Class-9</a>
+        <a href="/class_data/10" class="dropdown-menu-item">Class-10</a>
+        <a href="/class_data/11" class="dropdown-menu-item">Class-11</a>
+        <a href="/class_data/12" class="dropdown-menu-item">Class-12</a>
       </div>
-      <a href="#"><i class="fa fa-envelope"></i> Contact</a>
-      <a href="/login"><i class="fa fa-sign-out"></i> Logout</a>
     </div>
+    <a href="/new_Admission">New Admission</a>
+    <a href="#"><i class="fa fa-envelope"></i>Contact</a>
+    <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+  </div>
 
+  <h1>
     {% for i in detail %}
-       <li>{{ i }}</li>
+    <li>{{ i }}</li>
     {% endfor %}
   </h1>
+
+  <div class="footer">
+    &copy; 2023 Bhalode Academy. All rights reserved.
+  </div>
 </body>
 </html>

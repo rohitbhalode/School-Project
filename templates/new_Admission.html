@@ -5,22 +5,30 @@
   <style>
     /* Your existing CSS styles */
 
-    /* Additional styles for the new admission page */
+    /* Additional styles for the form */
     .form-container {
       margin-top: 20px;
       padding: 20px;
       background-color: #f1f1f1;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .form-label {
+      display: block;
+      margin-bottom: 8px;
       font-weight: bold;
+      color: #333;
     }
 
     .form-input {
       width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       box-sizing: border-box;
+      margin-bottom: 16px;
+      font-size: 16px;
     }
 
     .form-submit-button {
@@ -29,6 +37,8 @@
       padding: 10px 16px;
       border: none;
       cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
     }
 
     .form-submit-button:hover {
@@ -42,43 +52,53 @@
       <!-- Navigation menu code -->
     </div>
   </h1>
-
   <div class="form-container">
-    <h2>New Admission Form</h2>
+    <a href="#" onclick="window.history.back();" class="back-button"><i class="fa fa-chevron-left"></i> Back</a>
+    <h2 style="text-align: center;">New Admission</h2>
 
     <form action="/submit_admission" method="POST">
       <label for="name" class="form-label">Name:</label>
-      <input type="text" id="name" name="name" class="form-input" required><br>  
+      <input type="text" id="name" name="name" class="form-input" required>  
 
       <label for="Fname" class="form-label">Father Name:</label>
-      <input type="text" id="Fname" name="Fname" class="form-input" required><br>
+      <input type="text" id="Fname" name="Fname" class="form-input" required>
 
       <label for="Class" class="form-label">Class:</label>
-      <select id="std" name="std" class="form-input" required>
+      <select type="number" id="std" name="std" class="form-input" required>
         <option value="">Select a Class</option>
-        <option value="9th">9</option>
-        <option value="10th">10</option>
-        <option value="11th">11</option>
-        <option value="12th">12</option>
-      </select><br>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
       
       <label for="age" class="form-label">Age:</label>
-      <input type="number" id="age" name="age" class="form-input" min="10" max="30" required><br>
+      <input type="number" id="age" name="age" class="form-input" min="10" max="30" required>
 
       <label for="email" class="form-label">Email:</label>
-      <input type="email" id="email" name="email" class="form-input" required><br>
+      <input type="email" id="email" name="email" class="form-input" required>
+      
+      <label for="email" class="form-label">Password:</label>
+      <input type="password" id="password" name="password" class="form-input" required>
 
       <label for="course" class="form-label">Course:</label>
       <select id="course" name="course" class="form-input" required>
         <option value="">Select a course</option>
-        <option value="All Course">Math</option>
-        <option value="math">Math</option>
-        <option value="science">Science</option>
-        <option value="history">History</option>
-      </select><br>
+        <option value="All">All</option>
+        <option value="Math">Math</option>
+        <option value="Science">Science</option>
+        <option value="History">History</option>
+      </select>
+      
+      <label for="Aname" class="form-label">Admitted by:</label>
+      <input type="text" id="Aname" name="Aname" class="form-input" required>
 
       <button type="submit" class="form-submit-button">Submit</button>
     </form>
+  </div>
+
+  <div style="text-align: center;" class="footer">
+    &copy; 2023 Bhalode Academy. All rights reserved.
   </div>
 </body>
 </html>
