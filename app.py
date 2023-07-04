@@ -33,24 +33,10 @@ def result():
     return redirect("/login")
 
 
-'''
-@app.route("/submit", methods=['POST'])
-def result():
-  Username = request.form.get("Username")
-  Password = request.form.get("Password")
-  name1 = Username.upper()
-  if (login_validation(Username, Password)):
-    session['username'] = Username
-    return render_template("teacherlogin.html", name=name1)
-  else:
-    return redirect("/login")
-
-'''
-
-
 @app.route("/teacher_profile", methods=['GET', 'POST'])
 def teacher_information():
   username = session.get('username')  # Retrieve the username from the session
+  username = username.upper()
   if username:
     d = teacher_info("Umesh kumbhar")
     return render_template("teacherlogin.html", name=username, detail=d)
@@ -78,10 +64,9 @@ def submit_admission():
 
 @app.route("/class_data/<int:class_number>")
 def class_data(class_number):
-  print(class_number)
   a = "Class_" + str(class_number)
   result = Class_select(a)
-  return render_template("class_data.html", data=result)
+  return render_template("class_data.html", data=result,Class=a)
 
 
 if __name__ == "__main__":

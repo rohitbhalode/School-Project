@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>{{ name }}</title>
+  <link rel="icon" type="image/png" href="static/OIP.jpg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     /* Add your custom styles here */
@@ -9,18 +10,16 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
     }
 
     .navbar {
-      background-color: #f1f1f1;
+      background-color: #4CAF50;
       padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .navbar a {
-      color: #333;
+      color: #fff;
       text-decoration: none;
       font-size: 16px;
       margin-right: 10px;
@@ -28,19 +27,57 @@
     }
 
     .navbar a:hover {
-      background-color: #ddd;
-      color: #000;
+      background-color: #45a049;
     }
 
     .navbar a.active {
-      background-color: #4CAF50;
-      color: #fff;
+      background-color: #333;
     }
 
-    .navbar .fa {
-      margin-right: 5px;
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
+    .header {
+      text-align: center;
+      color: #333;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .card table {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .card th, .card td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .card th {
+      background-color: #f1f1f1;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      background-color: #f1f1f1;
+      padding: 10px;
+      font-size: 14px;
+      color: #666;
+      margin-top: 50px;
+    }
+    
     .dropdown {
       position: relative;
       display: inline-block;
@@ -51,7 +88,7 @@
       position: absolute;
       background-color: #f9f9f9;
       min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }
 
@@ -60,48 +97,66 @@
     }
 
     .dropdown-content a {
-      color: black;
+      color: #333;
       padding: 12px 16px;
       text-decoration: none;
       display: block;
     }
 
     .dropdown-content a:hover {
-      background-color: #ddd;
+      background-color: #f1f1f1;
     }
 
-    .fake-footer {
-      background-color: #f1f1f1;
-      padding: 20px;
-      text-align: center;
-      margin-top: 50px;
-    }
   </style>
 </head>
 <body>
   <div class="navbar">
     <a class="active" href="/teacher_profile"><i class="fa fa-user"></i> {{ name }}</a>
-     <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
     <div class="dropdown">
-      
-      <button class="dropbtn">Classes <i class="fa fa-caret-down"></i></button>
+      <a href="#"><i class="fa fa-fw fa-graduation-cap"></i> Classes</a>
       <div class="dropdown-content">
-        <a href="/class_data/9" class="dropdown-menu-item">Class-9</a>
-        <a href="/class_data/10" class="dropdown-menu-item">Class-10</a>
-        <a href="/class_data/11" class="dropdown-menu-item">Class-11</a>
-        <a href="/class_data/12" class="dropdown-menu-item">Class-12</a>
+        <a href="/class_data/9">Class-9</a>
+        <a href="/class_data/10">Class-10</a>
+        <a href="/class_data/11">Class-11</a>
+        <a href="/class_data/12">Class-12</a>
       </div>
     </div>
-    <a href="/new_Admission">New Admission</a>
-    <a href="#"><i class="fa fa-envelope"></i>Contact</a>
-    <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+    <a href="/new_Admission"><i class="fa fa-fw fa-user-plus"></i> New Admission</a>
+    <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+    <a href="/logout"><i class="fa fa-fw fa-sign-out"></i> Logout</a>
   </div>
 
-  <h1>
-    {% for i in detail %}
-    <li>{{ i }}</li>
-    {% endfor %}
-  </h1>
+  <div class="container">
+    <h1 class="header">{{ name }}</h1>
+    {% if detail %}
+      <div class="card">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Experience</th>
+            <th>Education</th>
+          </tr>
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ detail[1] }}</td>
+            <td>{{ detail[2] }}</td>
+          </tr>
+        </table>
+      </div>
+    {% endif %}
+    
+    <div style="height: 500px; overflow-y: scroll;">
+      <h2>Contact</h2>
+      <p>Address: 123 ABC Street, XYZ City</p>
+      <p>Phone: 123-456-7890</p>
+      <p>Email: example@example.com</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu magna ac nisi elementum tempus. Vivamus sit amet cursus leo. In aliquam ex eget sem cursus tincidunt. Sed dignissim libero vitae risus facilisis vestibulum. Nam at libero in purus tempus vestibulum. Sed nec tortor ac purus efficitur luctus. Vestibulum hendrerit nulla id ipsum viverra, id molestie leo cursus. Ut sed sem id sem suscipit blandit. Mauris nec risus vitae nulla facilisis tristique. Aliquam vitae nunc sit amet tellus commodo elementum. Curabitur venenatis convallis risus, eu ultricies sem gravida id. Praesent pellentesque ante et ipsum mattis fringilla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti.</p>
+      <p>Donec nec elit sed enim scelerisque auctor. Fusce commodo dui nec quam ullamcorper luctus. Sed auctor a elit et pharetra. Sed lobortis interdum nulla id fermentum. Nam at gravida nisl, at ultrices nunc. Nulla maximus tempor feugiat. Curabitur ultricies sapien eu feugiat pulvinar. Mauris semper lobortis magna, sit amet lacinia velit efficitur ac. Aenean rutrum facilisis velit a dapibus. Curabitur tincidunt urna vitae erat venenatis tempus. Donec consectetur malesuada fringilla. Sed quis enim eu mauris tristique iaculis. Maecenas pulvinar malesuada metus, ac ullamcorper tellus finibus vel. Duis luctus sagittis magna, eget hendrerit mauris pharetra ut.</p>
+      <p>Phasellus eu dui vel nulla laoreet maximus non vitae odio. Proin pulvinar leo id mi tincidunt, eget gravida justo aliquam. Proin sit amet sapien elit. Integer vitae ipsum in nulla placerat venenatis. Vestibulum rutrum enim at lorem tempus, at malesuada metus tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi viverra ex vitae dui interdum hendrerit. Cras ultricies ligula ut nisl ultrices, vitae laoreet lectus venenatis. In hac habitasse platea dictumst. Aliquam in elit vitae risus faucibus facilisis. Nulla eleifend, ipsum eu posuere consequat, libero dui pulvinar elit, et vulputate neque lectus in elit.</p>
+      <p>Phasellus sagittis felis non tortor feugiat, et lacinia quam lacinia. Nulla facilisi. Sed ultricies scelerisque orci at varius. Aenean consectetur purus felis, eu lobortis ligula elementum ut. Vivamus a eros ac nisi suscipit aliquet. Fusce vestibulum metus et lectus consequat, id dictum massa viverra. Sed vulputate pulvinar fermentum. Nulla auctor consequat iaculis. Nunc dapibus eu felis sed tincidunt. Nam tincidunt ipsum nec urna convallis, et interdum nisl vulputate. Sed a neque consectetur, tincidunt purus sed, cursus nibh. Etiam interdum facilisis sagittis. Aenean malesuada dolor mauris, ut gravida est posuere non.</p>
+    </div>
+  </div>
 
   <div class="footer">
     &copy; 2023 Bhalode Academy. All rights reserved.

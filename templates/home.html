@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Website</title>
+  <title>Bhalode Academy</title>
+  <link rel="icon" type="image/png" href="static/OIP.jpg">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <style>
-    .fees-structure {
-      color: blue;
-      font-weight: bold;
-    }
-    .navbar {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background-color: #f1f1f1;
+    }
+
+    .navbar {
+      background-color: #4CAF50;
       overflow: hidden;
     }
 
     .navbar a {
       float: left;
-      color: #333;
+      color: #fff;
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
@@ -24,13 +29,63 @@
     }
 
     .navbar a:hover {
-      background-color: #ddd;
-      color: #000;
+      background-color: #45a049;
     }
 
     .navbar a.active {
-      background-color: #4CAF50;
+      background-color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .image-container img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover img {
+      transform: scale(1.1);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-container:hover .image-overlay {
+      opacity: 1;
+    }
+
+    .image-overlay h1 {
       color: #fff;
+      font-size: 36px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .card {
@@ -39,6 +94,14 @@
       background-color: #f9f9f9;
       border-radius: 4px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h2 {
+      color: #333;
+    }
+
+    .card p {
+      color: #666;
     }
 
     .footer {
@@ -50,52 +113,52 @@
     }
   </style>
 </head>
-  
 
 <body>
   <div class="navbar">
     <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="#fees-structure"><i class="fees-structure"></i> Fees Structure</a>
+    <a href="#fees-structure"><i class="fa fa-fw fa-dollar"></i> Fees Structure</a>
     <a href="#career"><i class="fa fa-fw fa-briefcase"></i> Career with Us</a>
     <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
     <a href="/login"><i class="fa fa-fw fa-user"></i> Login</a>
   </div>
 
-  <div class="column">
-    <h1>Bhalode Academy</h1>
-    <img src="static/pic1.png" alt="Image description" style="width: 100%; height: 270px;">
-  </div>
+  <div class="container">
+    <div class="image-container">
+      <img src="static/Student.png" alt="Image description">
+      <div class="image-overlay">
+        <h1>Bhalode Academy</h1>
+      </div>
+    </div>
 
-  <div id="fees-structure" class="card">
-    <h2>Fees Structure</h2>
-    <!-- Add your class-wise fee structure here -->
-    <p>Class 9: &#8377;XXX</p>
-    <p>Class 10: &#8377;XXX</p>
-    <p>Class 11: &#8377;XXX</p>
-    <p>Class 12: &#8377;XXX</p>
-  </div>
+    <div id="fees-structure" class="card">
+      <h2>Fees Structure</h2>
+      <p>Class 9: &#8377;90000</p>
+      <p>Class 10: &#8377;100000</p>
+      <p>Class 11: &#8377;110000</p>
+      <p>Class 12: &#8377;120000</p>
+    </div>
 
-  <div id="career" class="card">
-    <h2>Career with Us - Teacher Recruitment</h2>
-    <p>We are looking for passionate and qualified teachers to join our coaching classes. If you are interested in a teaching position, please fill out the form below:</p>
-    <form action="/teacher_recruitment" method="post">
-      <!-- Add your form fields for teacher recruitment here -->
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required><br>
-      <label for="phone">Phone:</label>
-      <input type="tel" id="phone" name="phone" required><br>
-      <input type="submit" value="Submit">
-    </form>
-  </div>
+    <div id="career" class="card">
+      <h2>Career with Us - Teacher Recruitment</h2>
+      <p>We are looking for passionate and qualified teachers to join our coaching classes. If you are interested in a teaching position, please fill out the form below:</p>
+      <form action="/teacher_recruitment" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
 
-  <div id="contact" class="card">
-    <h2>Contact Us</h2>
-    <!-- Add your contact information here -->
-    <p>Email: rohitbhalode@gmail.com</p>
-    <p>Phone: 8319231664</p>
-    <p>Address: Burhanpur 450331,MP,India</p>
+    <div id="contact" class="card">
+      <h2>Contact Us</h2>
+      <p>Email: rohitbhalode@gmail.com</p>
+      <p>Phone: 8319231664</p>
+      <p>Address: Burhanpur 450331, MP, India</p>
+    </div>
   </div>
 
   <div class="footer">

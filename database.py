@@ -16,10 +16,9 @@ try:
 except Exception as e:
   print(e)
 
-
 def login_validation(Username, Password):
 
-  query = "select * from login_detail where Username like '{}' and Password like '{}'".format(
+  query = "select * from project_database.login_detail where Username like '{}' and Password like '{}'".format(
     Username, Password)
   cursor.execute(query)
   myresult = cursor.fetchall()
@@ -31,7 +30,7 @@ def login_validation(Username, Password):
 
 def teacher_info(teacher):
 
-  query = "select * from teacher_info where Name='{}'".format(teacher)
+  query = "select * from project_database.teacher_info where Name='{}'".format(teacher)
   cursor.execute(query)
   result = cursor.fetchone()
   print("result", result)
@@ -42,7 +41,7 @@ def submit_new_admission(t):
 
   Class_Admission(t)
 
-  query = "insert into Student_info(S_Name,F_Name,Class,Course,P_Username,Password,Email,AdmittedBy) values (%s,%s,%s,%s,%s,%s,%s,%s)"
+  query = "insert into project_database.Student_info(S_Name,F_Name,Class,Course,P_Username,Password,Email,AdmittedBy) values (%s,%s,%s,%s,%s,%s,%s,%s)"
 
   cursor.execute(query, t)
   mydb.commit()
@@ -58,9 +57,7 @@ def Class_Admission(t):
 
 def Class_select(a):
   #a = "Class_" + str(9)
-  query = "select * from {}".format(a)
+  query = "select * from project_database.{}".format(a)
   cursor.execute(query)
   result = cursor.fetchall()
   return result
-
-

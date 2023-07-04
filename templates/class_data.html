@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Table Example</title>
+    <title>Data Table of {{ Class }}</title>
+    <link rel="icon" type="image/png" href="static/OIP.jpg">
     <style>
         /* CSS styling for the table */
         .data-table {
@@ -19,34 +20,102 @@
         .data-table th {
             background-color: #f5f5f5;
         }
+
+        /* CSS styling for dropdown menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* CSS styling for page container */
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* CSS styling for back button */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .back-button i {
+            margin-right: 5px;
+        }
+
+        /* CSS styling for footer */
+        .footer {
+            text-align: center;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-size: 14px;
+            color: #666;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Father Name</th>
-                <th>Course</th>
-                <th>AdmittedBy</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in data %}
+    <div class="container">
+        <h1>Data Table of {{ Class }}</h1>
+        <div>
+            <a href="#" onclick="window.history.back();" class="back-button"><i class="fa fa-chevron-left"></i> Back</a>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Course</th>
+                    <th>AdmittedBy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
                 <tr>
                     <td>{{ i[0] }}</td>
                     <td>{{ i[1] }}</td>
                     <td>{{ i[2] }}</td>
                     <td>{{ i[3] }}</td>
-      
-                   
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        &copy; 2023 Bhalode Academy. All rights reserved.
+    </div>
 </body>
-   <div class="footer">
-    &copy; 2023 Bhalode Academy. All rights reserved.
-  </div>
 </html>
