@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from database import login_validation, teacher_info, submit_new_admission, get_data, insert_data
-
+from email_report import report_make
 app = Flask(__name__)
 app.secret_key = "Hind"
 
@@ -115,6 +115,18 @@ def update_scores(Class):
     return redirect(url_for("class_data", class_number=int(Class.split("_")[1])))
 
 
+
+@app.route("/action_task/<full_name>/<Class>>", methods=["GET"])
+def action_task(full_name,Class):
+    # Perform the action here based on the 'full_name' parameter
+    # For example, you can use 'full_name' to retrieve data from the database or perform some other task.
+    
+    # For demonstration purposes, let's just print the full_name
+    print("Action performed for:", full_name)
+    report_make(full_name,Class)
+    # You can redirect to another page or return a response here if needed.
+    # For example, to redirect to the class_data page:
+    return redirect(url_for("class_data", class_number=int(Class.split("_")[1])))
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0')

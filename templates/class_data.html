@@ -111,26 +111,27 @@
                         <th>Social Science</th>
                         <th>Science</th>
                         <th>Hindi</th>
+                        <th>Action</th> <!-- Add a new column for the action button -->
                     </tr>
                 </thead>
                 <tbody>
-    {% for i in data %}
-    <tr>
-                <td>{{ i[0] }}</td>
-               <td><input type="number" class="editable-input" name="math_{{ loop.index }}_{{ i[0] }}" value="{{ i[1] }}"></td>
-<td><input type="number" class="editable-input" name="english_{{ loop.index }}_{{ i[0] }}" value="{{ i[2] }}"></td>
-<td><input type="number" class="editable-input" name="social_science_{{ loop.index }}_{{ i[0] }}" value="{{ i[3] }}"></td>
-<td><input type="number" class="editable-input" name="science_{{ loop.index }}_{{ i[0] }}" value="{{ i[4] }}"></td>
-<td><input type="number" class="editable-input" name="hindi_{{ loop.index }}_{{ i[0] }}" value="{{ i[5] }}"></td>
-
-            </tr>
-    {% endfor %}
-</tbody>
-
+                    {% for i in data %}
+                        <tr>
+                            <td>{{ i[0] }}</td>
+                            <td><input type="number" class="editable-input" name="math_{{ loop.index }}_{{ i[0] }}" value="{{ i[1] }}"></td>
+                            <td><input type="number" class="editable-input" name="english_{{ loop.index }}_{{ i[0] }}" value="{{ i[2] }}"></td>
+                            <td><input type="number" class="editable-input" name="social_science_{{ loop.index }}_{{ i[0] }}" value="{{ i[3] }}"></td>
+                            <td><input type="number" class="editable-input" name="science_{{ loop.index }}_{{ i[0] }}" value="{{ i[4] }}"></td>
+                            <td><input type="number" class="editable-input" name="hindi_{{ loop.index }}_{{ i[0] }}" value="{{ i[5] }}"></td>
+                            <td><a href="{{ url_for('action_task', full_name=i[0], Class=Class) }}">Action</a></td> <!-- Add the action button with a link to the action_task route -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             <input type="submit" value="Save">
         </form>
     </div>
+
     <div class="footer">
         &copy; 2023 Bhalode Academy. All rights reserved.
     </div>
