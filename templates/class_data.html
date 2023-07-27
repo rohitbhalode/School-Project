@@ -3,6 +3,7 @@
 <head>
     <title>Data Table of {{ Class }}</title>
     <link rel="icon" type="image/png" href="static/OIP.jpg">
+  
     <style>
         /* CSS styling for the table */
         .data-table {
@@ -76,6 +77,13 @@
             margin-right: 5px;
         }
 
+        /* CSS styling for editable inputs */
+        .editable-input {
+            border: none;
+            background-color: transparent;
+            width: 80px;
+        }
+
         /* CSS styling for footer */
         .footer {
             text-align: center;
@@ -89,30 +97,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>Data Table of {{ Class }}</h1>
+        <h1>Marks of {{ Class }}</h1>
         <div>
-            <a href="#" onclick="window.history.back();" class="back-button"><i class="fa fa-chevron-left"></i> Back</a>
+            <a href="{{ url_for('teacher_information') }}" onclick="window.history.back();" class="back-button"><i class="fa fa-chevron-left"></i> Back</a>
         </div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Father Name</th>
-                    <th>Course</th>
-                    <th>AdmittedBy</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for i in data %}
-                <tr>
-                    <td>{{ i[0] }}</td>
-                    <td>{{ i[1] }}</td>
-                    <td>{{ i[2] }}</td>
-                    <td>{{ i[3] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <form action="{{ url_for('update_scores', Class=Class) }}" method="POST">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Math</th>
+                        <th>English</th>
+                        <th>Social Science</th>
+                        <th>Science</th>
+                        <th>Hindi</th>
+                    </tr>
+                </thead>
+                <tbody>
+    {% for i in data %}
+    <tr>
+                <td>{{ i[0] }}</td>
+               <td><input type="number" class="editable-input" name="math_{{ loop.index }}_{{ i[0] }}" value="{{ i[1] }}"></td>
+<td><input type="number" class="editable-input" name="english_{{ loop.index }}_{{ i[0] }}" value="{{ i[2] }}"></td>
+<td><input type="number" class="editable-input" name="social_science_{{ loop.index }}_{{ i[0] }}" value="{{ i[3] }}"></td>
+<td><input type="number" class="editable-input" name="science_{{ loop.index }}_{{ i[0] }}" value="{{ i[4] }}"></td>
+<td><input type="number" class="editable-input" name="hindi_{{ loop.index }}_{{ i[0] }}" value="{{ i[5] }}"></td>
+
+            </tr>
+    {% endfor %}
+</tbody>
+
+            </table>
+            <input type="submit" value="Save">
+        </form>
     </div>
     <div class="footer">
         &copy; 2023 Bhalode Academy. All rights reserved.

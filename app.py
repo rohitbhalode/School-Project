@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, url_for
-from database import login_validation, teacher_info, submit_new_admission, Class_select
+from database import login_validation, teacher_info, submit_new_admission, get_data, insert_data
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"
+app.secret_key = "Hind"
 
 
 @app.route("/")
@@ -12,12 +12,30 @@ def welcome():
 
 @app.route("/login")
 def login():
-  username = session.get('username')
+  username = session.get('username_teacher')
   if username:
     # User is already logged in, redirect to teacher_profile
     return redirect("/teacher_profile")
   else:
     return render_template("index.html")
+
+
+@app.route("/submit_parent", methods=['POST'])
+def submit_parent():
+  Username = request.form.get("Username")
+  Password = request.form.get("Password")
+  if Username == 'check' and Password == '1234':
+    session['username_parent'] = Username
+    return "SUccessful login parent "
+  else:
+    return redirect("/login")
+  '''
+  if login_validation(Username, Password):
+    session['username'] = Username
+    return render_template("teacherlogin.html", name=name1)
+  else:
+    return redirect("/login")
+    '''
 
 
 @app.route("/submit", methods=['POST'])
@@ -27,7 +45,7 @@ def result():
   name1 = Username.upper()
 
   if login_validation(Username, Password):
-    session['username'] = Username
+    session['username_teacher'] = Username
     return render_template("teacherlogin.html", name=name1)
   else:
     return redirect("/login")
@@ -35,7 +53,8 @@ def result():
 
 @app.route("/teacher_profile", methods=['GET', 'POST'])
 def teacher_information():
-  username = session.get('username')  # Retrieve the username from the session
+  username = session.get(
+    'username_teacher')  # Retrieve the username from the session
   username = username.upper()
   if username:
     d = teacher_info("Umesh kumbhar")
@@ -62,11 +81,39 @@ def submit_admission():
   return redirect("/teacher_profile")
 
 
-@app.route("/class_data/<int:class_number>")
+@app.route("/class_data/<class_number>")
 def class_data(class_number):
   a = "Class_" + str(class_number)
-  result = Class_select(a)
-  return render_template("class_data.html", data=result,Class=a)
+  data = get_data(a)
+  #return render_template("index.html", data=data)
+  return render_template("class_data.html", data=data, Class=a)
+
+
+@app.route("/update_scores/<Class>", methods=["POST"])
+def update_scores(Class):
+    for key, value in request.form.items():
+        if key.startswith("math_"):
+            # Extract the index and full_name from the input name
+            parts = key.split("_")
+            index = parts[1]
+            full_name = "_".join(parts[2:])
+           # print(index,full_name)
+            if value.isdigit():  # Check if value is a valid integer
+                math = int(value)
+            else:
+                math = 0  # Assign a default value if the input is not a valid integer
+            
+            # Perform similar validation for other subjects
+            english = int(request.form[f"english_{index}_{full_name}"]) if request.form[f"english_{index}_{full_name}"].isdigit() else 0
+            social_science = int(request.form[f"social_science_{index}_{full_name}"]) if request.form[f"social_science_{index}_{full_name}"].isdigit() else 0
+            science = int(request.form[f"science_{index}_{full_name}"]) if request.form[f"science_{index}_{full_name}"].isdigit() else 0
+            hindi = int(request.form[f"hindi_{index}_{full_name}"]) if request.form[f"hindi_{index}_{full_name}"].isdigit() else 0
+            
+            # Now you have the full_name, index, and scores, you can update the database
+            insert_data(Class, full_name, math, english, social_science, science, hindi)
+           # print(Class, full_name, math, english, social_science, science, hindi)
+    return redirect(url_for("class_data", class_number=int(Class.split("_")[1])))
+
 
 
 if __name__ == "__main__":

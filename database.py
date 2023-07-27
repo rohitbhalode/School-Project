@@ -1,20 +1,18 @@
 import mysql.connector
-
 import os
 
 db_host = os.environ['DB_HOST']
 db_user = os.environ['DB_USER']
 db_password = os.environ['DB_PASSWORD']
-print(db_host)
-print(db_password)
+
 try:
   mydb = mysql.connector.connect(host=db_host,
                                  user=db_user,
                                  password=db_password)
   cursor = mydb.cursor()
-  print("connection successfully", mydb)
 except Exception as e:
   print(e)
+
 
 def login_validation(Username, Password):
 
@@ -30,7 +28,8 @@ def login_validation(Username, Password):
 
 def teacher_info(teacher):
 
-  query = "select * from project_database.teacher_info where Name='{}'".format(teacher)
+  query = "select * from project_database.teacher_info where Name='{}'".format(
+    teacher)
   cursor.execute(query)
   result = cursor.fetchone()
   print("result", result)
@@ -49,13 +48,18 @@ def submit_new_admission(t):
 
 def Class_Admission(t):
   a = "Class_" + t[2]
-  query = "insert into {} (S_Name,Fname, Course,AdmittedBy) values ('{}','{}','{}','{}')".format(
-    a, t[0], t[1], t[-2], t[-1])
+  query = "insert into {} (full_name, math, english, social_science, science, hindi) values ('{}','{}','{}','{}','{}','{}')".format(
+    a, t[0]+ " " + t[1], 0, 0, 0, 0, 0)
   cursor.execute(query)
   mydb.commit()
+  
+def insert_data(a,full_name, math, english, social_science, science, hindi):
+  query ="UPDATE {} SET math={}, english={}, social_science={}, science={}, hindi={} WHERE full_name='{}'".format(a,math, english, social_science, science, hindi, full_name)
+  cursor.execute(query)
+  mydb.commit()
+  
 
-
-def Class_select(a):
+def get_data(a):
   #a = "Class_" + str(9)
   query = "select * from project_database.{}".format(a)
   cursor.execute(query)
