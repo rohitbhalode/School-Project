@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, make_response
 from database import login_validation, teacher_info, submit_new_admission, get_data, insert_data
-from email_report import report_make
+from email_report import report_make,create_report_pdf
+from df_creation import create_df
+import io
+
 app = Flask(__name__)
 app.secret_key = "Hind"
 
@@ -127,6 +130,20 @@ def action_task(full_name,Class):
     # You can redirect to another page or return a response here if needed.
     # For example, to redirect to the class_data page:
     return redirect(url_for("class_data", class_number=int(Class.split("_")[1])))
+
+@app.route('/download_report/<Class>',methods=['GET'])
+def download_report(Class):
+  df=create_df(Class)
+  pdf_bytes = create_report_pdf(df)
+  filename = 'student_report.pdf'
+    # Return the PDF file as a downloadable attachment
+  response = make_response(pdf_bytes)
+  response.headers['Content-Type'] = 'application/pdf'
+  response.headers['Content-Disposition'] = f'attachment; filename={filename}'
+  return response
+
+  
+
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0')

@@ -1,4 +1,4 @@
-import pandas as pd
+
 import matplotlib.pyplot as plt
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
@@ -9,10 +9,12 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase  
 from email import encoders 
-import os
 import mysql.connector
-
-
+import os
+from matplotlib.backends.backend_pdf import PdfPages
+from df_creation import create_df
+import pandas as pd
+import io
 db_host = os.environ['DB_HOST']
 db_user = os.environ['DB_USER']
 db_password = os.environ['DB_PASSWORD']
@@ -30,32 +32,7 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
 
     # Your code to retrieve the data from the database and perform necessary calculations goes here...
     # For simplicity, I'm just initializing a DataFrame with some sample data.
-    
-   
-    query="select * from project_database.{}".format(Class_name)
-    
-    df=pd.read_sql(query,mydb)
-  
-    df['Total'] = df.iloc[:, 1:].sum(axis=1)
-    df["Average"]=df['Total']/5
-    df['Average']=df['Average'].round(2)
-    df['Pass/Fail'] = df['Average'].apply(lambda x: 'Pass' if x >= 40 else 'Fail')
-    df['DateOfBirth']='01/01/2001'
-    def get_category(average_marks):
-        if average_marks >= 80:
-            return 'A'
-        elif average_marks >= 65:
-            return 'B'
-        elif average_marks >= 40:
-            return 'C'
-        else:
-            return 'Fail'
-
-    df['Category'] = df['Average'].apply(get_category)
-    df['Rank'] = df['Total'].rank(ascending=False, method='min')
-    df['Highest'] = df.iloc[:, 1:6].max(axis=1)
-    df['Lowest'] = df.iloc[:, 1:6].min(axis=1)
-    # Function to prepare the report content
+    df=create_df(Class_name)
     def prepare_report(student_name):
         student_data = df[df['full_name'] == student_name].squeeze()
         average_marks_rounded = round(student_data['Average'], 2)
@@ -194,7 +171,6 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
 
 # Call the function to send the email with the report for "Rohit Vilas"
 
-
 def report_make(full_name,Class_name):
     sender_email = 'rohitbhalode@gmail.com'
     sender_password = 'tzdfsoqlvyuvwvcm'
@@ -203,5 +179,69 @@ def report_make(full_name,Class_name):
     cursor.execute(query)
     r=cursor.fetchall()[0][4]
     generate_student_report(sender_email, sender_password, r, full_name, Class_name)
+
         
-    
+def create_report_pdf(df):
+    # Sort the DataFrame by Total in descending order to get the top three students
+    top_three_students = df.nlargest(3, 'Total')
+
+    # Calculate pass/fail counts
+    pass_fail_counts = df['Pass/Fail'].value_counts().to_dict()
+
+    # Create a BytesIO object to hold the PDF data
+    pdf_io = io.BytesIO()
+
+    # Create the PDF using PdfPages and save it to the BytesIO object
+    with PdfPages(pdf_io) as pdf_pages:
+        # Plot 1: Average Marks of Students
+        plt.figure(figsize=(10, 5))
+        plt.bar(df['full_name'], df['Average'])
+        plt.xlabel('Student Name')
+        plt.ylabel('Average Marks')
+        plt.title('Average Marks of Students')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        pdf_pages.savefig()
+        plt.close()
+
+        # Plot 2: Top Three Students - Total Marks
+        top_three_colors = ['#ff4757', '#ffa801', '#2ed573']
+        plt.figure(figsize=(5, 5))
+        plt.bar(top_three_students['full_name'], top_three_students['Total'], color=top_three_colors)
+        plt.xlabel('Student Name')
+        plt.ylabel('Total Marks')
+        plt.title('Top Three Students - Total Marks')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        pdf_pages.savefig()
+        plt.close()
+
+        # Plot 3: Subject-wise Total Marks Distribution
+        subject_totals = df.iloc[:, 1:6].sum()
+        subject_wise_total_df = pd.DataFrame(subject_totals, columns=['Total Marks'])
+        subject_wise_total_df.reset_index(inplace=True)
+        subject_wise_total_df.rename(columns={'index': 'Subject'}, inplace=True)
+
+        plt.figure(figsize=(8, 8))
+        plt.pie(subject_wise_total_df['Total Marks'], labels=subject_wise_total_df['Subject'], autopct='%1.1f%%', startangle=140)
+        plt.title('Subject-wise Total Marks Distribution')
+        plt.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+        plt.tight_layout()
+        pdf_pages.savefig()
+        plt.close()
+
+        # Plot 4: Pass/Fail Bar Graph
+        plt.figure(figsize=(6, 4))
+        plt.bar(pass_fail_counts.keys(), pass_fail_counts.values())
+        plt.xlabel('Status')
+        plt.ylabel('Count')
+        plt.title('Pass/Fail Counts')
+        plt.tight_layout()
+        pdf_pages.savefig()
+        plt.close()
+
+    # Reset the BytesIO object's position to the beginning
+    pdf_io.seek(0)
+
+    # Return the PDF data as bytes
+    return pdf_io.read()
