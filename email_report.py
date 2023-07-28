@@ -173,7 +173,7 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
 
 def report_make(full_name,Class_name):
     sender_email = 'rohitbhalode@gmail.com'
-    sender_password = 'tzdfsoqlvyuvwvcm'
+    sender_password = os.environ['Email_pwd']
     #recipient_email = 'rohitbhalode@gmail.com'
     query="select * from student_info where full_name='{}'".format(full_name)
     cursor.execute(query)

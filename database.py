@@ -32,7 +32,7 @@ def teacher_info(teacher):
     teacher)
   cursor.execute(query)
   result = cursor.fetchone()
-  print("result", result)
+  #print("result", result)
   return result
 
 
