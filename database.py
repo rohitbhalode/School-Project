@@ -40,7 +40,7 @@ def submit_new_admission(t):
 
   Class_Admission(t)
 
-  query = "insert into project_database.Student_info(S_Name,F_Name,Class,Course,P_Username,Password,Email,AdmittedBy) values (%s,%s,%s,%s,%s,%s,%s,%s)"
+  query = "insert into project_database.student_info(full_name,Father_name,Class,P_Username,Password,Email,AdmittedBy) values (%s,%s,%s,%s,%s,%s,%s)"
 
   cursor.execute(query, t)
   mydb.commit()
@@ -49,7 +49,7 @@ def submit_new_admission(t):
 def Class_Admission(t):
   a = "Class_" + t[2]
   query = "insert into {} (full_name, math, english, social_science, science, hindi) values ('{}','{}','{}','{}','{}','{}')".format(
-    a, t[0]+ " " + t[1], 0, 0, 0, 0, 0)
+    a, t[0], 0, 0, 0, 0, 0)
   cursor.execute(query)
   mydb.commit()
   

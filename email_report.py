@@ -12,6 +12,7 @@ from email import encoders
 import os
 import mysql.connector
 
+
 db_host = os.environ['DB_HOST']
 db_user = os.environ['DB_USER']
 db_password = os.environ['DB_PASSWORD']
@@ -32,11 +33,12 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
     
    
     query="select * from project_database.{}".format(Class_name)
-    print("coming to you *****")
+    
     df=pd.read_sql(query,mydb)
-    print("Readed ******")
+  
     df['Total'] = df.iloc[:, 1:].sum(axis=1)
     df["Average"]=df['Total']/5
+    df['Average']=df['Average'].round(2)
     df['Pass/Fail'] = df['Average'].apply(lambda x: 'Pass' if x >= 40 else 'Fail')
     df['DateOfBirth']='01/01/2001'
     def get_category(average_marks):
@@ -56,14 +58,19 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
     # Function to prepare the report content
     def prepare_report(student_name):
         student_data = df[df['full_name'] == student_name].squeeze()
+        average_marks_rounded = round(student_data['Average'], 2)
+        has_passed_subjects = all(student_data[subject] >= 40 for subject in ['math', 'english', 'social_science', 'science', 'hindi'])
 
+    # Determine pass/fail status and set the style for pass/fail text
+        pass_fail_status = 'Pass' if (student_data['Average'] >= 40 and has_passed_subjects) else 'Fail'
+       
         report_content = f"Student Name: {student_data['full_name']}\n" \
                          f"Date of Birth: {student_data['DateOfBirth']}\n" \
                          f"Total Marks: {student_data['Total']}\n" \
-                         f"Average Marks: {student_data['Average']}\n" \
+                         f"Percentage Marks: {average_marks_rounded}\n" \
                          f"Highest Marks: {student_data['Highest']}\n" \
                          f"Lowest Marks: {student_data['Lowest']}\n" \
-                         f"Pass/Fail: {student_data['Pass/Fail']}\n" \
+                         f"Pass/Fail: {pass_fail_status}\n" \
                          f"Category: {student_data['Category']}\n" \
                          f"Rank: {int(student_data['Rank'])}\n"
 
@@ -78,7 +85,7 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
         student_marks = df[df['full_name'] == student_name][subject_names].squeeze()
 
         # Calculate the class average marks in each subject
-        class_avg_marks = df[subject_names].mean()
+        class_avg_marks = df[subject_names].mean().round(2)
 
         # Plot the comparison bar graph
         bar_width = 0.35
@@ -191,6 +198,10 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
 def report_make(full_name,Class_name):
     sender_email = 'rohitbhalode@gmail.com'
     sender_password = 'tzdfsoqlvyuvwvcm'
-    recipient_email = 'rohitbhalode@gmail.com'
-    generate_student_report(sender_email, sender_password, recipient_email, full_name,Class_name)
+    #recipient_email = 'rohitbhalode@gmail.com'
+    query="select * from student_info where full_name='{}'".format(full_name)
+    cursor.execute(query)
+    r=cursor.fetchall()[0][4]
+    generate_student_report(sender_email, sender_password, r, full_name, Class_name)
+        
     
