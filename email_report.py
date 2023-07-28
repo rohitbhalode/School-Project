@@ -18,7 +18,7 @@ import io
 db_host = os.environ['DB_HOST']
 db_user = os.environ['DB_USER']
 db_password = os.environ['DB_PASSWORD']
-email_pwd=os.environ['Email_pwd']
+
 try:
     mydb = mysql.connector.connect(host=db_host,
                                    user=db_user,
@@ -174,7 +174,7 @@ def generate_student_report(sender_email, sender_password, recipient_email, stud
 
 def report_make(full_name,Class_name):
     sender_email = 'rohitbhalode@gmail.com'
-    sender_password =email_pwd
+    sender_password ='tzdfsoqlvyuvwvcm'
     #recipient_email = 'rohitbhalode@gmail.com'
     query="select * from student_info where full_name='{}'".format(full_name)
     cursor.execute(query)
